@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 let allEmployees = [];
 function Employees(employeeID, fullName, department, level, salary) {
@@ -16,7 +16,7 @@ Employees.prototype.render = function () {
 };
 function getRandomArbitrary(min, max) {
     if (min < max)
-        return Math.ceil(Math.random() * (max - min) + min) / 7.5;
+        return Math.ceil(Math.random() * (max - min) + min) * 0.075;
     else
         return "wrong entry";
 };
