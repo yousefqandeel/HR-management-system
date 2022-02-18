@@ -63,7 +63,11 @@ Employees.prototype.randSalary = function () {
 }
 function getRandomArbitrary(min, max) {
     if (min < max)
+
+        return Math.ceil(Math.random() * (max - min) + min) * 0.075;
+=======
         return Math.floor((Math.random() * max) + min) * 0.075;
+
     else
         return "wrong entry";
 };
