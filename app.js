@@ -134,7 +134,6 @@ function renderAll() {
     }
 };
 
-///Table
 
 function renderHeader() {
     let tr = document.createElement("tr");
@@ -201,3 +200,5 @@ getData();
 renderHeader();
 renderBody();
 countOfEmployees();
+renderAll();
+
