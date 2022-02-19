@@ -1,5 +1,6 @@
 'use strict';
 
+
 let allEmployees = [];
 let form = document.getElementById("dataForm");
 let employeeArea = document.getElementById("employeeArea");
@@ -133,71 +134,13 @@ function renderAll() {
         allEmployees[i].render();
     }
 };
-
-///Table
-
-function renderHeader() {
-    let tr = document.createElement("tr");
-    table.appendChild(tr);
-
-    let department = document.createElement("th");
-    department.textContent = "Department";
-    tr.appendChild(department);
-
-    let numOfEmpl = document.createElement("th");
-    numOfEmpl.textContent = "#Of employee";
-    tr.appendChild(numOfEmpl);
-
-    let totalSalary = document.createElement("th");
-    totalSalary.textContent = "Total salary";
-    tr.appendChild(totalSalary);
-
-    let averageSalary = document.createElement("th");
-    averageSalary.textContent = "Average salary";
-    tr.appendChild(averageSalary);
-};
-
-Employees.prototype.countOfEmployees = function () {
-    let count = 0;
-    let department = [];
-    switch (department) {
-        case "Administration ":
-            return count++;
-
-        case "Marketing":
-            return count++;
-
-        case "Development":
-            return count++;
-
-        case "Finance ":
-            return count++;
-    }
-};
-
-Employees.prototype.renderTableBody = function () {
-    let tr = document.createElement("tr");
-    table.appendChild(tr);
-
-
-
-    let department = document.createElement("th");
-    department.textContent = this.department;
-    tr.appendChild(department);
-
-    let salary = document.createElement("td");
-    salary.textContent = this.salary;
-    tr.appendChild(salary);
-};
-
-function renderBody() {
-    for (let i = 0; i < allEmployees.length; i++) {
-        allEmployees[i].renderTableBody();
-    }
-}
-
 renderAll();
 getData();
-renderHeader();
-renderBody();
-countOfEmployees();
+
+var _NSCaseId;
+var nsId;
+$("#listOfCases li").click(function () {
+    nsId = $(this).attr('id');
+    localStorage.setItem('_NSCaseId', nsId);
+    alert(nsId);
+});
