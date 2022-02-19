@@ -3,6 +3,8 @@
 let allEmployees = [];
 let form = document.getElementById("dataForm");
 let employeeArea = document.getElementById("employeeArea");
+let table = document.getElementById("table");
+
 function Employees(ID, fullName, department, level, image, salary) {
     this.ID = ID;
     this.fullName = fullName;
@@ -65,6 +67,7 @@ function getRandomArbitrary(min, max) {
     if (min < max)
 
         return Math.ceil(Math.random() * (max - min) + min) * 0.075;
+
     else
         return "wrong entry";
 };
@@ -87,6 +90,25 @@ function display() {
     }
 };
 display();
+
+function saveData() {
+    let formatted = JSON.stringify(allEmployees);
+    localStorage.setItem("Employees", formatted);
+};
+
+function getData() {
+    let employee = localStorage.getItem("Employees");
+    let personData = JSON.parse(employee);
+
+    if (personData != null) {
+        allEmployees = [];
+        for (let i = 0; i < personData.length; i++) {
+            new Employees(0, personData[i].fullName, personData[i].department, personData[i].level, personData[i].image, 0);
+        };
+    }
+    renderAll();
+};
+
 form.addEventListener("submit", handelSubmit)
 
 function handelSubmit(event) {
@@ -101,8 +123,8 @@ function handelSubmit(event) {
     newEmployee.randID();
     newEmployee.randSalary();
     renderAll();
+    saveData();
     form.reset();
-
 };
 function renderAll() {
     employeeArea.innerHTML = "";
@@ -111,4 +133,72 @@ function renderAll() {
         allEmployees[i].render();
     }
 };
+
+
+function renderHeader() {
+    let tr = document.createElement("tr");
+    table.appendChild(tr);
+
+    let department = document.createElement("th");
+    department.textContent = "Department";
+    tr.appendChild(department);
+
+    let numOfEmpl = document.createElement("th");
+    numOfEmpl.textContent = "#Of employee";
+    tr.appendChild(numOfEmpl);
+
+    let totalSalary = document.createElement("th");
+    totalSalary.textContent = "Total salary";
+    tr.appendChild(totalSalary);
+
+    let averageSalary = document.createElement("th");
+    averageSalary.textContent = "Average salary";
+    tr.appendChild(averageSalary);
+};
+
+Employees.prototype.countOfEmployees = function () {
+    let count = 0;
+    let department = [];
+    switch (department) {
+        case "Administration ":
+            return count++;
+
+        case "Marketing":
+            return count++;
+
+        case "Development":
+            return count++;
+
+        case "Finance ":
+            return count++;
+    }
+};
+
+Employees.prototype.renderTableBody = function () {
+    let tr = document.createElement("tr");
+    table.appendChild(tr);
+
+
+
+    let department = document.createElement("th");
+    department.textContent = this.department;
+    tr.appendChild(department);
+
+    let salary = document.createElement("td");
+    salary.textContent = this.salary;
+    tr.appendChild(salary);
+};
+
+function renderBody() {
+    for (let i = 0; i < allEmployees.length; i++) {
+        allEmployees[i].renderTableBody();
+    }
+}
+
 renderAll();
+getData();
+renderHeader();
+renderBody();
+countOfEmployees();
+renderAll();
+
