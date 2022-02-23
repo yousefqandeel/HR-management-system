@@ -1,148 +1,210 @@
 'use strict';
 
-let empl = localStorage.getItem('employee');
-let parseempl = JSON.parse(emp1);
-let Adm = 0;
-let Dev = 0, Mar = 0, Fin = 0, av = 0, av1 = 0, av2 = 0, av3 = 0, sum = 0, sum1 = 0, sum2 = 0, sum3 = 0, alls = 0;
-let table = document.getElementById("table");
-let allEmployees = [];
+let divID = document.getElementById("tableDiv");
+let table = document.createElement("table");
 
-function renderHeader() {
-    let tr = document.createElement("tr");
-    table.appendChild(tr);
-
-    let department = document.createElement("th");
-    department.textContent = "Department";
-    tr.appendChild(department);
-
-    let numOfEmpl = document.createElement("th");
-    numOfEmpl.textContent = "#Of employee";
-    tr.appendChild(numOfEmpl);
-
-    let totalSalary = document.createElement("th");
-    totalSalary.textContent = "Total salary";
-    tr.appendChild(totalSalary);
-
-    let averageSalary = document.createElement("th");
-    averageSalary.textContent = "Average salary";
-    tr.appendChild(averageSalary);
-};
-function renderTableBody() {
-    let tr = document.createElement("tr");
-    table.appendChild(tr);
-    let department = document.createElement("th");
-    department.textContent = this.department;
-    tr.appendChild(department);
-
-    let salary = document.createElement("td");
-    salary.textContent = this.salary;
-    tr.appendChild(salary);
-};
-
-function renderBody() {
-    for (let i = 0; i < allEmployees.length; i++) {
-        allEmployees[i].renderTableBody();
-    }
+function createTable() {
+    divID.appendChild(table);
 }
-renderHeader();
-renderBody();
-function renderTableBody() {
 
-    let Dep = new Array("Administration", "Marketing", "Development", "Finance");
+function tableHeader() {
+    let tr = document.createElement("tr");
+    table.appendChild(tr);
+    let th = document.createElement("th");
+    th.textContent = "Department Name";
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.textContent = "# Department";
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.textContent = "Total salary";
+    tr.appendChild(th);
+    th = document.createElement("th");
+    th.textContent = "Average salary of the department";
+    tr.appendChild(th);
+}
 
-    for (let i = 0; i < parseempl.length; i++) {
-        alls += parseempl[i].salary;
-        switch (parseempl[i].Department) {
-            case "Administration":
-                Adm = Adm + 1;
-                sum += parseempl[i].salary;
-                av = sum / Adm;
-                break;
-            case "Marketing":
-                {
-                    Mar++;;
-                    sum1 += parseempl[i].salary;
-                    av1 = sum1 / Mar;
-                    break;
+function tableBody() {
+    let tr = document.createElement("tr");
+    table.appendChild(tr);
+    let td = document.createElement("td");
+    td.textContent = "Administration";
+    tr.appendChild(td);
+    let td1 = document.createElement("td");
+    td1.textContent = calculateNumberOfDepartment("Administration");
+    tr.appendChild(td1);
+    let td2 = document.createElement("td");
+    td2.textContent = calculateTotalSalary("Administration");
+    tr.appendChild(td2);
+    let td3 = document.createElement("td");
+    td3.textContent = calculateTotalSalary("Administration") / calculateNumberOfDepartment("Administration");
+    tr.appendChild(td3);
+
+    let tr1 = document.createElement("tr");
+    table.appendChild(tr1);
+    td = document.createElement("td");
+    td.textContent = "Finance";
+    tr1.appendChild(td);
+    td1 = document.createElement("td");
+    td1.textContent = calculateNumberOfDepartment("Finance");
+    tr1.appendChild(td1);
+    td2 = document.createElement("td");
+    td2.textContent = calculateTotalSalary("Finance");
+    tr1.appendChild(td2);
+    td3 = document.createElement("td");
+    td3.textContent = calculateTotalSalary("Finance") / calculateNumberOfDepartment("Finance");
+    tr1.appendChild(td3);
+
+    let tr2 = document.createElement("tr");
+    table.appendChild(tr2);
+    td = document.createElement("td");
+    td.textContent = "Marketing";
+    tr2.appendChild(td);
+    td1 = document.createElement("td");
+    td1.textContent = calculateNumberOfDepartment("Marketing");
+    tr2.appendChild(td1);
+    td2 = document.createElement("td");
+    td2.textContent = calculateTotalSalary("Marketing");
+    tr2.appendChild(td2);
+    td3 = document.createElement("td");
+    td3.textContent = calculateTotalSalary("Marketing") / calculateNumberOfDepartment("Marketing");
+    tr2.appendChild(td3);
+
+    let tr3 = document.createElement("tr");
+    table.appendChild(tr3);
+    td = document.createElement("td");
+    td.textContent = "Development";
+    tr3.appendChild(td);
+    td1 = document.createElement("td");
+    td1.textContent = calculateNumberOfDepartment("Development");
+    tr3.appendChild(td1);
+    td2 = document.createElement("td");
+    td2.textContent = calculateTotalSalary("Development");
+    tr3.appendChild(td2);
+    td3 = document.createElement("td");
+    td3.textContent = calculateTotalSalary("Development") / calculateNumberOfDepartment("Development");
+    tr3.appendChild(td3);
+
+}
+
+function createTableFooter() {
+    let footer = document.createElement("footer");
+    footer.setAttribute("id", "tableFooter");
+    table.appendChild(footer);
+    divID.appendChild(footer);
+    let tr = document.createElement("tr");
+    tr.setAttribute("id", "styleTr");
+    table.appendChild(tr);
+    let th = document.createElement("th");
+    th.textContent = "Total";
+    tr.appendChild(th);
+
+    th = document.createElement("th");
+    th.textContent = totalNumberDepartment();
+    tr.appendChild(th);
+
+    th = document.createElement("th");
+    th.textContent = totalSalaryDepartment();
+    tr.appendChild(th);
+
+    th = document.createElement("th");
+    th.textContent = totalSalaryDepartment() / totalNumberDepartment();
+    tr.appendChild(th);
+}
+
+function calculateNumberOfDepartment(department) {
+    let numberOfDepartment = 0;
+    let employee = localStorage.getItem("employee");
+    let parseEmployee = JSON.parse(employee);
+    switch (department) {
+        case "Administration":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    numberOfDepartment++;
                 }
-            case "Development":
-                Dev++;
-                sum2 += parseempl[i].salary;
-                av2 = sum2 / Dev;
-                break;
-            case "Finance":
-                Fin = Fin + 1;
-                sum3 += parseempl[i].salary;
-                av3 = sum3 / Fin;
-                break;
-
-        }
-
+            }
+            break;
+        case "Finance":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    numberOfDepartment++;
+                }
+            }
+            break;
+        case "Marketing":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    numberOfDepartment++;
+                }
+            }
+            break;
+        case "Development":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    numberOfDepartment++;
+                }
+            }
+            break;
+        default: null;
+            break;
     }
-    let Dev = 0, Mar = 0, Fin = 0, av = 0, av1 = 0, av2 = 0, av3 = 0, sum = 0, sum1 = 0, sum2 = 0, sum3 = 0, alls = 0;
-    for (let i = 0; i < deplength; i++) {
-        let tr = document.createElement("tr");
-        table.appendChild(tr);
-
-        let department = document.createElement("td");
-        department.textContent = Dep[i];
-        tr.appendChild(department);
-
-        let fill = document.createElement("td");
-        if (Dep[i] == "Administration") {
-            fill.textContent = Adm;
-        }
-        else if (Dep[i] == "Marketing") {
-            fill.textContent = Mar;
-        }
-        else if (Dep[i] == "Development") {
-            fill.textContent = Dev;
-        }
-        else if (Dep[i] == "Finance") {
-            fill.textContent = Fin;
-
-        }
-        tr.appendChild(fill)
-        let avr = document.createElement("td");
-        if (Dep[i] == "Administration") {
-            avr.textContent = avr;
-        }
-        else if (Dep[i] == "Marketing") {
-            avr.textContent = avr1;
-        }
-        else if (Dep[i] == "Development") {
-            avr.textContent = avr2;
-        }
-        else if (Dep[i] == "Finance") {
-            avr.textContent = avr3;
-        }
-        tr.appendChild(fill)
-
-        let num = document.createElement("td");
-        if (Dep[i] == "Administration") {
-            num.textContent = sum;
-        }
-        else if (Dep[i] == "Marketing") {
-            num.textContent = sum1;
-        }
-        else if (Dep[i] == "Development") {
-            num.textContent = sum2;
-        }
-        else if (Dep[i] == "Finance") {
-            num.textContent = sum3;
-        }
-        tr.appendChild(fill);
-    }
-    function tfoot() {
-        let tfoot = document.createElement("tfoot");
-        table = appendChild(tfoot);
-        let trallem = document.createElement("tr");
-        trallem.textContent = "The total number of employees " + parseempl.length;
-        tfoot.appendChild(trallem);
-        let trallsa = document.createElement("tr");
-    }
+    return numberOfDepartment;
 }
 
-renderHeader();
-renderTableBody();
-tfoot();
+
+function calculateTotalSalary(department) {
+    let totalSalary = 0;
+    let employee = localStorage.getItem("employee");
+    let parseEmployee = JSON.parse(employee);
+    switch (department) {
+        case "Administration":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    totalSalary += parseEmployee[i].salary;
+                }
+            }
+            break;
+        case "Finance":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    totalSalary += parseEmployee[i].salary;
+                }
+            }
+            break;
+        case "Marketing":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    totalSalary += parseEmployee[i].salary;
+                }
+            }
+            break;
+        case "Development":
+            for (let i = 0; i < parseEmployee.length; i++) {
+                if (parseEmployee[i].department == department) {
+                    totalSalary += parseEmployee[i].salary;
+                }
+            }
+            break;
+        default: null;
+            break;
+    }
+    return totalSalary;
+}
+function totalNumberDepartment() {
+    let employee = localStorage.getItem("employee");
+    let parseEmployee = JSON.parse(employee);
+    return parseEmployee.length;
+}
+function totalSalaryDepartment() {
+    let totalSalary = 0;
+    let employee = localStorage.getItem("employee");
+    let parseEmployee = JSON.parse(employee);
+    for (let i = 0; i < parseEmployee.length; i++) {
+        totalSalary += parseEmployee[i].salary;
+    }
+    return totalSalary;
+}
+createTable();
+tableHeader();
+tableBody();
+createTableFooter();
