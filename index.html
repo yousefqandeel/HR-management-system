@@ -5,78 +5,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Employee Management System</title>
+    <title>Hr Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <header>
-        <div class="fixed-header">
-            <div class="container">
-                <nav>
-                    <a href="index.html">Home</a>
-                    <a href="accounting.html">Accounting</a>
-                </nav>
-            </div>
-        </div>
+        <label id="Site_Name">HR Management System</label>
+        <nav>
+            <a href="accounting.html">Accounting Page</a>
+        </nav>
     </header>
-
-    <main id="mainSection">
-        <form id="dataForm">
-            <fieldset class="form-style-1">
-
-
-                </div>
-                <legend class="legend">Add new employee</legend>
-                <ul class="form-style-1">
-                    <li>
-                        <label for="name">Full Name <span class="required">*</span></label>
-                        <input type="text" name="name" id="name" class="field-divided" required />
-                    </li>
-                    <li>
-                        <label for="sellect">Department</label>
-                        <select name="field4" id="sellect" class="field-select">
-                            <option value="Administration">Administration</option>
-                            <option value="Development">Development</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Marketing">Marketing</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="level">Level</label>
-                        <select name="field4" id="level" class="field-select">
-                            <option value="Junior">Junior</option>
-                            <option value="Mid-Senior">Mid-Senior</option>
-                            <option value="Senior">Senior</option>
-                        </select>
-                    </li>
-
-
-                    <li>
-                        <label for="image">Image <span class="required">*</span></label>
-                        <input type="text" name="field3" id="image" class="field-long" />
-                    </li>
-
-                    <li>
-                        <input type="submit" id="submit" value="Add Employee" />
-                    </li>
-                </ul>
-
-            </fieldset>
-        </form>
-        <div id="employeeArea" class="cards">
-
+    <main>
+        <fieldset>
+            <legend>Add Employee : </legend>
+            <form id="form">
+                <label for="name" id="nameLabel">Full Name : </label>
+                <input type="text" name="name" id="name" required>
+                <br>
+                <label for="department" id="department">Department :</label>
+                <select id="department" name="department">
+                    <option value="Administration">Administration</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Development">Development</option>
+                    <option value="Finance">Finance</option>
+                </select>
+                <br>
+                <label for="level" id="level">Level :</label>
+                <select id="level">
+                    <option value="Junior">Junior</option>
+                    <option value="Mid-Senior">Mid-Senior</option>
+                    <option value="Senior">Senior</option>
+                </select>
+                <br>
+                <label for="image">Image URL :</label>
+                <input type="text" name="image" id="image">
+                <br>
+                <input type="submit" name="submit" id="submit" value="Add Employee">
+            </form>
+        </fieldset>
+        <div id="showEmployee">
         </div>
-        <table id="table"></table>
     </main>
-
-    <!-- <footer class="fixed-footer">
-
-        <p>All rights reserved. Yousef Qandeel &copy; 2022 <a href="https://www.linkedin.com/in/yousef-qandeel/">Follow
-                me on Linkedin</a></p>
-    </footer> -->
+    <footer>
+        <a href="https://www.linkedin.com/in/yousef-qandeel/"><i class="fa">&#xf08c;</i></a>
+        <label>All rights reserved © 2022</label>
+    </footer>
     <script src="app.js"></script>
-
 </body>
 
 </html>
