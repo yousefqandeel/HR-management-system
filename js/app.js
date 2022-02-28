@@ -52,13 +52,13 @@ Employees.prototype.render = function () {
 Employees.prototype.randSalary = function () {
     switch (this.level) {
         case "Junior":
-            this.salary = Math.floor(Math.random() * 500) + 1000;
+            this.salary = (Math.floor(Math.random() * 500 + 1) + 500);
             break;
         case "Mid-Senior":
-            this.salary = (Math.floor(Math.random() * 500) + 1000);
+            this.salary = (Math.floor(Math.random() * 500 + 1) + 1000);
             break;
         case "Senior":
-            this.salary = (Math.floor(Math.random() * 500) + 1500);
+            this.salary = (Math.floor(Math.random() * 500 + 1) + 1500);
             break;
         default:
             break;
