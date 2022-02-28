@@ -9,8 +9,8 @@ function Employees(ID, fullName, department, level, image) {
     this.department = department;
     this.level = level;
     this.image = image;
-    this.randSalary();
     this.gitRandomSalary();
+    this.randSalary();
     allEmployees.push(this);
 
 };
@@ -52,20 +52,20 @@ Employees.prototype.render = function () {
 Employees.prototype.randSalary = function () {
     switch (this.level) {
         case "Junior":
-            this.salary = (Math.floor(Math.random() * 500) + 1000);
+            this.salary = (Math.floor(Math.random() * 500 + 1) + 500);
             break;
         case "Mid-Senior":
-            this.salary = (Math.floor(Math.random() * 1000) + 1500);
+            this.salary = (Math.floor(Math.random() * 500 + 1) + 1000);
             break;
         case "Senior":
-            this.salary = (Math.floor(Math.random() * 1500) + 2000);
+            this.salary = (Math.floor(Math.random() * 500 + 1) + 1500);
             break;
         default:
             break;
     }
 }
 Employees.prototype.gitRandomSalary = function () {
-    this.randomSalary = this.salary - (this.salary * (7.5 / 100));
+    this.randomSalary = this.salary - (this.salary * 0.075);
 };
 Employees.prototype.randID = function () {
     this.ID = Math.floor(1000 + Math.random() * 9000);
