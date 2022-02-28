@@ -3,14 +3,14 @@
 let allEmployees = [];
 let form = document.getElementById("dataForm");
 let employeeArea = document.getElementById("employeeArea");
-function Employees(ID, fullName, department, level, image, salary) {
+function Employees(ID, fullName, department, level, image) {
     this.ID = ID;
     this.fullName = fullName;
     this.department = department;
     this.level = level;
     this.image = image;
-    this.salary = salary;
-
+    this.gitRandomSalary();
+    this.randSalary();
     allEmployees.push(this);
 
 };
@@ -52,33 +52,33 @@ Employees.prototype.render = function () {
 Employees.prototype.randSalary = function () {
     switch (this.level) {
         case "Junior":
-            this.salary = getRandomArbitrary(500, 1000);
+            this.salary = Math.floor(Math.random() * 500) + 1000;
             break;
         case "Mid-Senior":
-            this.salary = getRandomArbitrary(1000, 1500);
+            this.salary = (Math.floor(Math.random() * 500) + 1000);
+            break;
+        case "Senior":
+            this.salary = (Math.floor(Math.random() * 500) + 1500);
             break;
         default:
-            this.salary = getRandomArbitrary(1500, 2000);
+            break;
     }
 }
-function getRandomArbitrary(min, max) {
-    if (min < max)
-        return Math.floor((Math.random() * max) + min) * 0.075;
-    else
-        return "wrong entry";
+Employees.prototype.gitRandomSalary = function () {
+    this.randomSalary = this.salary - (this.salary * 0.075);
 };
 Employees.prototype.randID = function () {
     this.ID = Math.floor(1000 + Math.random() * 9000);
 }
 
 function display() {
-    let ghazi = new Employees(1000, "Ghazi Samer", "Administration ", "Senior", "Ghazi.jpg", getRandomArbitrary(1500, 2000));
-    let lana = new Employees(1001, "Lana Ali", "Finance ", "Senior", "Lana.jpg", getRandomArbitrary(1500, 2000));
-    let tamara = new Employees(1002, "Tamara Ayoub", "Marketing", "Senior", "Tamara.jpg", getRandomArbitrary(1500, 2000));
-    let saif = new Employees(1003, "Safi Walid", "Administration", "Mid-Senior", "Safi.jpg", getRandomArbitrary(1000, 1500));
-    let omar = new Employees(1004, "Omar Zaid	", "Development", "Senior", "Omar.jpg", getRandomArbitrary(1500, 2000));
-    let rana = new Employees(1005, "Rana Saleh", "Development ", "Junior", "Rana.jpg", getRandomArbitrary(500, 1000));
-    let hadi = new Employees(1005, "Hadi Ahmad", "Finance ", "Mid-Senior", "Hadi.jpg", getRandomArbitrary(1000, 1500));
+    let ghazi = new Employees(1000, "Ghazi Samer", "Administration ", "Senior", "./photos/Ghazi.jpg");
+    let lana = new Employees(1001, "Lana Ali", "Finance ", "Senior", "./photos/Lana.jpg");
+    let tamara = new Employees(1002, "Tamara Ayoub", "Marketing", "Senior", "./photos/Tamara.jpg");
+    let saif = new Employees(1003, "Safi Walid", "Administration", "Mid-Senior", "./photos/Safi.jpg");
+    let omar = new Employees(1004, "Omar Zaid	", "Development", "Senior", "./photos/Omar.jpg");
+    let rana = new Employees(1005, "Rana Saleh", "Development ", "Junior", "./photos/Rana.jpg");
+    let hadi = new Employees(1005, "Hadi Ahmad", "Finance ", "Mid-Senior", "./photos/Hadi.jpg");
 
 
     for (let i = 0; i < allEmployees.length; i++) {
