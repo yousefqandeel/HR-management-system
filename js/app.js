@@ -1,18 +1,21 @@
 'use strict';
 
 let allEmployees = [];
+let id = 1000;
 let form = document.getElementById("dataForm");
 let employeeArea = document.getElementById("employeeArea");
-function Employees(ID, fullName, department, level, image) {
-    this.ID = ID;
+function Employees(fullName, department, level, image) {
+    this.id = 0;
     this.fullName = fullName;
     this.department = department;
     this.level = level;
     this.image = image;
     this.gitRandomSalary();
-    this.randSalary();
     allEmployees.push(this);
+};
 
+Employees.prototype.getID = function () {
+    this.id = id++;
 };
 Employees.prototype.render = function () {
     let div1 = document.createElement("div");
@@ -33,7 +36,7 @@ Employees.prototype.render = function () {
     div.appendChild(name);
 
     let id = document.createElement("p");
-    id.textContent = `-ID: ${this.ID}`;
+    id.textContent = `-ID: ${this.id}`;
     div.appendChild(id);
 
     let department = document.createElement("p");
@@ -48,6 +51,7 @@ Employees.prototype.render = function () {
     salary.textContent = `-Salary: ${this.salary}`;
     div.appendChild(salary);
 };
+
 
 Employees.prototype.randSalary = function () {
     switch (this.level) {
@@ -64,21 +68,37 @@ Employees.prototype.randSalary = function () {
             break;
     }
 }
+
 Employees.prototype.gitRandomSalary = function () {
-    this.randomSalary = this.salary - (this.salary * 0.075);
+    let min = 0;
+    let max = 0;
+    let empSalary = 0;
+
+    if (this.level === "Junior") {
+        max = 1000;
+        min = 500;
+    }
+    else if (this.level === "Mid-Senior") {
+        max = 1500;
+        min = 1000;
+    }
+    else {
+        max = 2000;
+        min = 1500;
+    }
+    let salary = Math.floor(Math.random() * (max - min + 1) + min);
+    empSalary = salary - (salary * 0.075);
+    this.salary = empSalary;
 };
-Employees.prototype.randID = function () {
-    this.ID = Math.floor(1000 + Math.random() * 9000);
-}
 
 function display() {
-    let ghazi = new Employees(1000, "Ghazi Samer", "Administration ", "Senior", "./photos/Ghazi.jpg");
-    let lana = new Employees(1001, "Lana Ali", "Finance ", "Senior", "./photos/Lana.jpg");
-    let tamara = new Employees(1002, "Tamara Ayoub", "Marketing", "Senior", "./photos/Tamara.jpg");
-    let saif = new Employees(1003, "Safi Walid", "Administration", "Mid-Senior", "./photos/Safi.jpg");
-    let omar = new Employees(1004, "Omar Zaid	", "Development", "Senior", "./photos/Omar.jpg");
-    let rana = new Employees(1005, "Rana Saleh", "Development ", "Junior", "./photos/Rana.jpg");
-    let hadi = new Employees(1005, "Hadi Ahmad", "Finance ", "Mid-Senior", "./photos/Hadi.jpg");
+    let ghazi = new Employees("Ghazi Samer", "Administration ", "Senior", "./photos/Ghazi.jpg");
+    let lana = new Employees("Lana Ali", "Finance ", "Senior", "./photos/Lana.jpg");
+    let tamara = new Employees("Tamara Ayoub", "Marketing", "Senior", "./photos/Tamara.jpg");
+    let saif = new Employees("Safi Walid", "Administration", "Mid-Senior", "./photos/Safi.jpg");
+    let omar = new Employees("Omar Zaid", "Development", "Senior", "./photos/Omar.jpg");
+    let rana = new Employees("Rana Saleh", "Development ", "Junior", "./photos/Rana.jpg");
+    let hadi = new Employees("Hadi Ahmad", "Finance ", "Mid-Senior", "./photos/Hadi.jpg");
 
 
     for (let i = 0; i < allEmployees.length; i++) {
@@ -86,6 +106,25 @@ function display() {
     }
 };
 display();
+
+function saveData() {
+    let formatData = JSON.stringify(allEmployees);
+    localStorage.setItem("employees", formatData);
+};
+
+function getData() {
+    let employees = localStorage.getItem("employees");
+    let parseEmployee = JSON.parse(employees);
+
+    allEmployees = [];
+    if (parseEmployee != null) {
+        for (let i = 0; i < parseEmployee.length; i++) {
+            new Employees(parseEmployee[i].fullName, parseEmployee[i].department, parseEmployee[i].level, parseEmployee[i].image);
+        };
+    }
+    renderAll();
+};
+
 form.addEventListener("submit", handelSubmit)
 
 function handelSubmit(event) {
@@ -96,20 +135,26 @@ function handelSubmit(event) {
     let level = event.target.level.value;
     let image = event.target.image.value;
 
-    let newEmployee = new Employees(0, fullName, department, level, image, 0);
-    newEmployee.randID();
-    newEmployee.randSalary();
+    let newEmployee = new Employees(fullName, department, level, image);
+    newEmployee.getID();
+    newEmployee.gitRandomSalary();
     renderAll();
+    saveData();
     form.reset();
 
 };
+
 function renderAll() {
     employeeArea.innerHTML = "";
     for (let i = 0; i < allEmployees.length; i++) {
-
+        allEmployees[i].getID();
         allEmployees[i].render();
     }
 };
+
+renderAll();
+getData();
+
 
 'use strict';
 

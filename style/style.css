@@ -147,3 +147,16 @@ select{
     width: 200px;
     height: 200px;
   }
+
+#divTable th,td{
+	border: 1px solid;
+	text-align: center;
+	align-items: center; 
+	padding: 10px;
+  }
+
+.table{
+	margin-left: 350px;
+	margin-top: 70px;
+    margin-right:50px;
+}
